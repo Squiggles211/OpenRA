@@ -20,6 +20,7 @@ namespace OpenRA.Mods.RA
 	public class SellableInfo : TraitInfo<Sellable>
 	{
 		public readonly int RefundPercent = 50;
+		public bool isSold = false;
 	}
 
 	public class Sellable : IResolveOrder
@@ -43,6 +44,9 @@ namespace OpenRA.Mods.RA
 			var rb = self.TraitOrDefault<RenderBuilding>();
 			if (rb != null && self.Info.Traits.Get<RenderBuildingInfo>().HasMakeAnimation)
 				self.QueueActivity(new MakeAnimation(self, true, () => rb.PlayCustomAnim(self, "make")));
+
+			self.Info.Traits.Get<SellableInfo>().isSold = true;
+
 			self.QueueActivity(new Sell());
 		}
 	}
