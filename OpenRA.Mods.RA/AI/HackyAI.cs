@@ -45,7 +45,7 @@ namespace OpenRA.Mods.RA.AI
 		public readonly int RallyPointScanRadius = 8;
 
 		// Temporary hack to maintain previous rallypoint behavior.
-		public readonly string RallypointTestBuilding = "fact";
+		public readonly string RallypointTestBuilding = "fact.gdi";
 		public readonly string[] UnitQueues = { "Vehicle", "Infantry", "Plane", "Ship", "Aircraft" };
 		public readonly bool ShouldRepairBuildings = true;
 

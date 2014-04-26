@@ -1,14 +1,10 @@
-MCV:
+^MCV:
 	Inherits: ^Vehicle
 	Valued:
 		Cost: 2000
-	Tooltip:
-		Name: Mobile Construction Vehicle
-		Description: Deploys into another Construction Yard.\n  Unarmed
 	Buildable:
 		BuildPaletteOrder: 100
 		Prerequisites: anyhq
-		Owner: gdi,nod
 	Selectable:
 		Priority: 3
 	Mobile:
@@ -20,12 +16,10 @@ MCV:
 	RevealsShroud:
 		Range: 8c0
 	Transforms:
-		IntoActor: fact
 		Offset: -1,-1
 		Facing: 108
 		TransformSounds: constru2.aud, hvydoor1.aud
 		NoTransformSounds: deploy1.aud
-	RenderUnit:
 	MustBeDestroyed:
 	BaseBuilding:
 	LeavesHusk:
@@ -35,7 +29,29 @@ MCV:
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
-
+	RenderUnit:
+		Image:mcv
+		
+MCV.gdi:
+	Inherits: ^MCV
+	Buildable:
+		Owner: gdi
+	Transforms:
+		IntoActor: fact.gdi
+	Tooltip:
+		Name: GDI Mobile Construction Vehicle
+		Description: Deploys into a GDI Construction Yard.\n  Unarmed
+		
+MCV.nod:
+	Inherits: ^MCV
+	Buildable:
+		Owner: nod
+	Transforms:
+		IntoActor: fact.nod
+	Tooltip:
+		Name: Nod Mobile Construction Vehicle
+		Description: Deploys into a Nod Construction Yard.\n  Unarmed
+		
 HARV:
 	Inherits: ^Tank
 	Valued:

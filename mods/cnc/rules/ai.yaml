@@ -2,14 +2,14 @@ Player:
 	HackyAI@Cabal:
 		Name:Cabal
 		BuildingCommonNames:
-			ConstructionYard: fact
+			ConstructionYard: fact.gdi, fact.nod
 			Refinery: proc
 			Power: nuke,nuk2
 			Barracks: pyle,hand
 			VehiclesFactory: weap,afld
 			Silo: silo
 		UnitsCommonNames:
-			Mcv: mcv
+			Mcv: mcv.gdi, mcv.nod
 		BuildingLimits:
 			proc: 4
 			pyle: 2
@@ -64,14 +64,14 @@ Player:
 	HackyAI@Watson:
 		Name:Watson
 		BuildingCommonNames:
-			ConstructionYard: fact
+			ConstructionYard: fact.gdi, fact.nod
 			Refinery: proc
 			Power: nuke,nuk2
 			Barracks: pyle,hand
 			VehiclesFactory: weap,afld
 			Silo: silo
 		UnitsCommonNames:
-			Mcv: mcv
+			Mcv: mcv.gdi, mcv.nod
 		BuildingLimits:
 			proc: 4
 			pyle: 2
@@ -126,14 +126,14 @@ Player:
 	HackyAI@HAL9001:
 		Name:HAL 9001
 		BuildingCommonNames:
-			ConstructionYard: fact
+			ConstructionYard: fact.gdi, fact.nod
 			Refinery: proc
 			Power: nuke,nuk2
 			Barracks: pyle,hand
 			VehiclesFactory: weap,afld
 			Silo: silo
 		UnitsCommonNames:
-			Mcv: mcv
+			Mcv: mcv.gdi, mcv.nod
 		BuildingLimits:
 			proc: 4
 			pyle: 2

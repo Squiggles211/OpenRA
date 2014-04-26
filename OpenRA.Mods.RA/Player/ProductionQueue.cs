@@ -24,6 +24,8 @@ namespace OpenRA.Mods.RA
 	{
 		[Desc("What kind of production will be added (e.g. Building, Infantry, Vehicle, ...)")]
 		public readonly string Type = null;
+		[Desc("Which race this production queue will always produce regardless of player's race")]
+		public readonly string TargetRace = null;
 		[Desc("Group queues from separate buildings together into the same tab.")]
 		public readonly string Group = null;
 
@@ -80,7 +82,10 @@ namespace OpenRA.Mods.RA
 			playerResources = playerActor.Trait<PlayerResources>();
 			PlayerPower = playerActor.Trait<PowerManager>();
 
-			Race = self.Owner.Country;
+			//Set CountryInfo to it's own instance to prevent issues when Race changes in the future due to capture
+			Race = Game.CreateObject<CountryInfo>("CountryInfo");
+			FieldLoader.LoadField(Race, "Race", (info.TargetRace != null) ? info.TargetRace : self.Owner.Country.Race);
+
 			Produceable = InitTech(playerActor);
 		}
 
@@ -96,12 +101,15 @@ namespace OpenRA.Mods.RA
 
 		public void OnCapture(Actor self, Actor captor, Player oldOwner, Player newOwner)
 		{
-			PlayerPower = newOwner.PlayerActor.Trait<PowerManager>();
-			playerResources = newOwner.PlayerActor.Trait<PlayerResources>();
+			//clear queue first to refund appropriate player..
 			ClearQueue();
 
-			// Produceable contains the tech from the original owner - this is desired so we don't clear it.
-			Produceable = InitTech(self.Owner.PlayerActor);
+			PlayerPower = newOwner.PlayerActor.Trait<PowerManager>();
+			playerResources = newOwner.PlayerActor.Trait<PlayerResources>();
+
+			//Producable tech and watchers should be for the new owner and new Race unless TargetRace specifically set in info
+			FieldLoader.LoadField(Race, "Race", (this.Info.TargetRace != null) ? this.Info.TargetRace : newOwner.Country.Race);
+			Produceable = InitTech(newOwner.PlayerActor);
 
 			// Force a third(!) tech tree update to ensure that prerequisites are correct.
 			// The first two updates are triggered by adding/removing the actor when

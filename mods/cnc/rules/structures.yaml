@@ -1,4 +1,4 @@
-FACT:
+^FACT:
 	Inherits: ^BaseBuilding
 	Buildable:
 		Queue: Building
@@ -6,9 +6,6 @@ FACT:
 		Owner: None
 	Valued:
 		Cost: 2000
-	Tooltip:
-		Name: Construction Yard
-		Description: Builds structures
 	Building:
 		Power: 0
 		Footprint: xxx xxx
@@ -23,7 +20,6 @@ FACT:
 	Production:
 		Produces: Building,Defense
 	Transforms:
-		IntoActor: mcv
 		Offset: 1,1
 		Facing: 108
 	ProductionQueue@Building:
@@ -49,7 +45,34 @@ FACT:
 		Cooldown: 75
 		Range: 14
 	WithBuildingPlacedAnimation:
-
+	RenderBuilding:
+		Image:fact
+	ProvidesCustomPrerequisite:
+		Prerequisite: fact
+		
+FACT.gdi:
+	Inherits: ^FACT
+	ProductionQueue@Building:
+		TargetRace: gdi
+	ProductionQueue@Defense:
+		TargetRace: gdi
+	Transforms:
+		IntoActor: mcv.gdi
+	Tooltip:
+		Name: GDI Construction Yard
+		Description: Builds GDI structures
+		
+FACT.nod:
+	Inherits: ^FACT
+	ProductionQueue@Building:
+		TargetRace: nod
+	ProductionQueue@Defense:
+		TargetRace: nod
+	Transforms:
+		IntoActor: mcv.nod
+	Tooltip:
+		Name: Nod Construction Yard
+		Description: Builds Nod structures	
 NUKE:
 	Inherits: ^BaseBuilding
 	Valued:
@@ -203,6 +226,7 @@ PYLE:
 		Group: Infantry
 		BuildSpeed: .4
 		LowPowerSlowdown: 3
+		TargetRace: gdi
 	ProductionBar:
 
 HAND:
@@ -238,6 +262,7 @@ HAND:
 		Group: Infantry
 		BuildSpeed: .4
 		LowPowerSlowdown: 3
+		TargetRace: nod
 	ProductionBar:
 
 AFLD:
@@ -275,6 +300,7 @@ AFLD:
 		BuildSpeed: .4
 		LowPowerSlowdown: 3
 		ReadyAudio:
+		TargetRace: nod
 	ProductionBar:
 
 WEAP:
@@ -313,6 +339,7 @@ WEAP:
 		Group: Vehicle
 		BuildSpeed: .4
 		LowPowerSlowdown: 3
+		TargetRace: gdi
 	ProductionBar:
 
 HPAD:
@@ -823,4 +850,3 @@ ANYHQ:
 	Tooltip:
 		Name: a communications center
 		Description: a communications center
-

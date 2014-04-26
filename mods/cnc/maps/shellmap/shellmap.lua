@@ -11,7 +11,7 @@ end
 WorldLoaded = function()
 	viewportOrigin = OpenRA.GetViewportCenterPosition()
 	CreateUnitsInTransport(lst1, { "htnk" });
-	CreateUnitsInTransport(lst2, { "mcv" });
+	CreateUnitsInTransport(lst2, { "mcv.gdi" });
 	CreateUnitsInTransport(lst3, { "htnk" });
 
 	local units = { boat1, boat2, boat3, boat4, lst1, lst2, lst3}
