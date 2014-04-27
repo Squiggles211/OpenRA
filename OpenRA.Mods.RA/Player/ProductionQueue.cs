@@ -131,7 +131,7 @@ namespace OpenRA.Mods.RA
 			foreach (var a in AllBuildables(Info.Type))
 			{
 				var bi = a.Traits.Get<BuildableInfo>();
-				// Can our race build this by satisfying normal prereqs?
+				// Can this ProductionQueue's defined race build this by satisfying normal prereqs?
 				var buildable = bi.Owner.Contains(Race.Race);
 				tech.Add(a, new ProductionState { Visible = buildable && !bi.Hidden });
 				if (buildable)

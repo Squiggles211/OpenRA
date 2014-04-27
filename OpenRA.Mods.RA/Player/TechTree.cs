@@ -23,6 +23,7 @@ namespace OpenRA.Mods.RA
 	public class TechTree
 	{
 		readonly List<Watcher> watchers = new List<Watcher>();
+		readonly Dictionary<string, bool> watcherAdded = new Dictionary<string, bool>();
 		readonly Player player;
 
 		public TechTree(ActorInitializer init)
@@ -48,12 +49,18 @@ namespace OpenRA.Mods.RA
 
 		public void Add(string key, BuildableInfo info, ITechTreeElement tte)
 		{
-			watchers.Add(new Watcher(key, info, tte));
+			//if this watcher's key already exists, do not add it to prevent large growth of watcher list and duplicates when multiple queues are created
+			if(!watcherAdded.Keys.Contains(key))
+			{
+				watchers.Add(new Watcher(key, info, tte));
+				watcherAdded.Add(key, true);
+			}
 		}
 
 		public void Remove(string key)
 		{
 			watchers.RemoveAll(x => x.Key == key);
+			watcherAdded.Remove(key);
 		}
 
 		static Cache<string, List<Actor>> GatherBuildables(Player player)
