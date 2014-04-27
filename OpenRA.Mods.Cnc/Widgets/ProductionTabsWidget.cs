@@ -37,15 +37,32 @@ namespace OpenRA.Mods.Cnc.Widgets
 			var queues = allQueues.Where(q => q.Info.Group == Group).ToList();
 			List<ProductionTab> tabs = new List<ProductionTab>();
 
+			//count of total queues
+			var removed = 0;
+
 			// Remove stale queues
 			foreach (var t in Tabs)
 			{
 				if (!queues.Contains(t.Queue))
+				{
+					removed++;
 					continue;
+				}
+
+				//if there are any removed tabs so far, change the name to match new queue number
+				if (removed > 0)
+				{
+					var nameID = int.Parse(t.Name);
+					nameID -= removed;
+					t.Name = nameID.ToString();
+				}
 
 				tabs.Add(t);
 				queues.Remove(t.Queue);
 			}
+
+			//change next queue name based on removed tabs
+			NextQueueName -= removed;
 
 			// Add new queues
 			foreach (var queue in queues)
