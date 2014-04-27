@@ -115,7 +115,7 @@ namespace OpenRA.Mods.RA
 			// The first two updates are triggered by adding/removing the actor when
 			// changing ownership, *before* the new techtree watchers have been set up.
 			// This is crap.
-			self.Owner.PlayerActor.Trait<TechTree>().Update();
+			//self.Owner.PlayerActor.Trait<TechTree>().Update();
 		}
 
 		public void Killed(Actor killed, AttackInfo e) { if (killed == self) ClearQueue(); }
