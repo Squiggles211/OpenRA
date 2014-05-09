@@ -20,9 +20,9 @@ namespace OpenRA.Mods.Cnc.Effects
 	{
 		Target target;
 		Animation anim;
-		Actor firedBy;
+		Player firedBy;
 
-		public IonCannon(Actor firedBy, World world, CPos location)
+		public IonCannon(Player firedBy, World world, CPos location)
 		{
 			this.firedBy = firedBy;
 			target = Target.FromCell(location);
@@ -40,7 +40,7 @@ namespace OpenRA.Mods.Cnc.Effects
 		void Finish(World world)
 		{
 			world.AddFrameEndTask(w => w.Remove(this));
-			Combat.DoExplosion(firedBy, "IonCannon", target.CenterPosition);
+			Combat.DoExplosion(firedBy.PlayerActor, "IonCannon", target.CenterPosition);
 		}
 	}
 }

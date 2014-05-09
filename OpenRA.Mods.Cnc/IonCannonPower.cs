@@ -46,7 +46,7 @@ namespace OpenRA.Mods.Cnc
 			{
 				var info = Info as IonCannonPowerInfo;
 				Sound.Play(Info.LaunchSound, order.TargetLocation.CenterPosition);
-				w.Add(new IonCannon(self, w, order.TargetLocation));
+				w.Add(new IonCannon(self.Owner, w, order.TargetLocation));
 
 				if (info.CameraActor == null)
 					return;
