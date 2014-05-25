@@ -71,6 +71,27 @@ GAPOWR:
 	WithIdleOverlay@PLUG:
 		Sequence: idle-plug
 
+GAPOWRUP:
+	Inherits: ^Component
+	Component:
+		Upgradables: gapowr
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 1
+		Owner: gdi
+		Hotkey: t
+	Valued:
+		Cost: 50
+	Tooltip:
+		Name: GDI Turbine
+		Description: Provides additional power
+	Building:
+		Power: 50
+		Footprint: x
+		Dimensions: 1,1
+	WithIdleOverlay:
+		Sequence: idle
+		
 GAPILE:
 	Inherits: ^Building
 	Buildable:

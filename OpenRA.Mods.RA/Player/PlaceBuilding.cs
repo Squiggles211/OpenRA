@@ -22,7 +22,7 @@ namespace OpenRA.Mods.RA
 	{
 		public void ResolveOrder(Actor self, Order order)
 		{
-			if (order.OrderString == "PlaceBuilding" || order.OrderString == "LineBuild")
+			if (order.OrderString == "PlaceBuilding" || order.OrderString == "LineBuild" || order.OrderString == "PlaceComponent")
 			{
 				self.World.AddFrameEndTask(w =>
 				{
@@ -59,6 +59,23 @@ namespace OpenRA.Mods.RA
 									Sound.PlayToPlayer(order.Player, s, building.CenterPosition);
 							playSounds = false;
 						}
+					}
+					else if (order.OrderString == "PlaceComponent")
+					{
+						var componentInfo = unit.Traits.GetOrDefault<ComponentInfo>();
+
+						if (componentInfo == null)
+							return;
+						
+						if (!self.World.CanPlaceComponent(order.TargetString, buildingInfo, componentInfo, order.TargetLocation, null))
+							return;
+
+						//call specific upgrade routine
+
+						//finish production but do not call the "PlayBuildAnim" routine
+						//queue.FinishProduction();
+
+						//return;
 					}
 					else
 					{

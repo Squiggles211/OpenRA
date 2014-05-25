@@ -40,6 +40,12 @@ namespace OpenRA.Mods.RA.Buildings
 					world.IsCellBuildable(t, building, toIgnore));
 		}
 
+		public static bool CanPlaceComponent(this World world, string name, BuildingInfo building, ComponentInfo component, CPos topLeft, Actor toIgnore)
+		{
+			return FootprintUtils.Tiles(world.Map.Rules, name, building, topLeft).All(
+				t => world.Map.IsInMap(t.X, t.Y) && world.ActorMap.GetUnitsAt(t).Any(b => component.Upgradables.Contains(b.Info.Name))); 
+		}
+
 		public static IEnumerable<CPos> GetLineBuildCells(World world, CPos location, string name, BuildingInfo bi)
 		{
 			var lbi = world.Map.Rules.Actors[name].Traits.Get<LineBuildInfo>();

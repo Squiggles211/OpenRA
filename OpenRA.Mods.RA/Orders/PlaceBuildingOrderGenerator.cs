@@ -32,6 +32,7 @@ namespace OpenRA.Mods.RA.Orders
 			Building = name;
 			var tileset = producer.World.TileSet.Id.ToLower();
 			BuildingInfo = producer.World.Map.Rules.Actors[Building].Traits.Get<BuildingInfo>();
+			//PlacementScheme = producer.World.Map.Rules.Actors[Building].Traits.GetOrDefault<PlacementSchemeInfo>();
 
 			buildOk = producer.World.Map.SequenceProvider.GetSequence("overlay", "build-valid-{0}".F(tileset)).GetSprite(0);
 			buildBlocked = producer.World.Map.SequenceProvider.GetSequence("overlay", "build-invalid").GetSprite(0);
@@ -53,22 +54,51 @@ namespace OpenRA.Mods.RA.Orders
 		{
 			if (mi.Button == MouseButton.Left)
 			{
-				var topLeft = xy - FootprintUtils.AdjustForBuildingSize(BuildingInfo);
-				if (!world.CanPlaceBuilding(Building, BuildingInfo, topLeft, null)
-					|| !BuildingInfo.IsCloseEnoughToBase(world, Producer.Owner, Building, topLeft))
-				{
-					Sound.PlayNotification(world.Map.Rules, Producer.Owner, "Speech", "BuildingCannotPlaceAudio", Producer.Owner.Country.Race);
-					yield break;
-				}
+				//if(PlacementScheme == null)
+					//yield break; //run default placement to be nice? DefaultPlacementSchemeInfo.place(blah, blah, blah);
 
-				var isLineBuild = world.Map.Rules.Actors[Building].Traits.Contains<LineBuildInfo>();
-				yield return new Order(isLineBuild ? "LineBuild" : "PlaceBuilding",
-					Producer.Owner.PlayerActor, false) { TargetLocation = topLeft, TargetString = Building };
+				//Order order = PlacementScheme.place(blah, blah, blah);
+				//if(order == null)
+					//yield break;
+
+				//yield return order;
+			//}
+		//}
+				var topLeft = xy - FootprintUtils.AdjustForBuildingSize(BuildingInfo);
+
+				var isComponent = world.Map.Rules.Actors[Building].Traits.Contains<ComponentInfo>();
+
+				if (isComponent)
+				{
+					var componentInfo = world.Map.Rules.Actors[Building].Traits.Get<ComponentInfo>();
+
+					if (!world.CanPlaceComponent(Building, BuildingInfo, componentInfo, topLeft, null))
+					{
+						Sound.PlayNotification(world.Map.Rules, Producer.Owner, "Speech", "BuildingCannotPlaceAudio", Producer.Owner.Country.Race);
+						yield break;
+					}
+
+					yield return new Order("PlaceComponent", Producer.Owner.PlayerActor, false) { TargetLocation = topLeft, TargetString = Building };
+				}
+				else
+				{
+					if (!world.CanPlaceBuilding(Building, BuildingInfo, topLeft, null)
+						|| !BuildingInfo.IsCloseEnoughToBase(world, Producer.Owner, Building, topLeft))
+					{
+						Sound.PlayNotification(world.Map.Rules, Producer.Owner, "Speech", "BuildingCannotPlaceAudio", Producer.Owner.Country.Race);
+						yield break;
+					}
+
+					var isLineBuild = world.Map.Rules.Actors[Building].Traits.Contains<LineBuildInfo>();
+					yield return new Order(isLineBuild ? "LineBuild" : "PlaceBuilding",
+						Producer.Owner.PlayerActor, false) { TargetLocation = topLeft, TargetString = Building };
+				}
 			}
 		}
 
 		public void Tick(World world) {}
 		public IEnumerable<IRenderable> Render(WorldRenderer wr, World world) { yield break; }
+
 		public void RenderAfterWorld(WorldRenderer wr, World world)
 		{
 			var position = wr.Position(wr.Viewport.ViewToWorldPx(Viewport.LastMousePos)).ToCPos();

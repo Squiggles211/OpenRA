@@ -130,6 +130,9 @@
     <Compile Include="Air\Aircraft.cs" />
     <Compile Include="Air\AttackHeli.cs" />
     <Compile Include="Air\AttackPlane.cs" />
+    <Compile Include="Buildings\AcceptsComponents.cs" />
+    <Compile Include="Buildings\Component.cs" />
+    <Compile Include="Buildings\PlacementScheme.cs" />
     <Compile Include="Effects\Beacon.cs" />
     <Compile Include="Player\PlaceBeacon.cs" />
     <Compile Include="MenuPaletteEffect.cs" />
@@ -573,9 +576,5 @@ copy "FuzzyLogicLibrary.dll" "$(SolutionDir)"
 cd "$(SolutionDir)"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Scripting\Global\" />
-    <Folder Include="Scripting\Properties\" />
-    <Folder Include="Console\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

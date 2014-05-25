@@ -41,6 +41,18 @@
 	Demolishable:
 	ScriptTriggers:
 
+^Component:
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		BuildSounds: place2.aud
+	Component:
+	RenderBuilding:
+	WithBuildingExplosion:
+	EditorAppearance:
+		RelativeToTopLeft: yes
+	ScriptTriggers:
+	
 ^Wall:
 	AppearsOnRadar:
 	Building:

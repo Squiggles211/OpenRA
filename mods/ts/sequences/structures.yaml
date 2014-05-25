@@ -93,6 +93,17 @@ gapowr:
 	icon: powricon
 		Start: 0
 
+gapowrup:
+	idle: gtpowr_b
+		Start: 0
+		Length: 12
+		ShadowStart: 3
+	make: gtpowr_b
+		Start: 0
+		Length: 1
+	icon: turbicon
+		Start: 0
+		
 gapile:
 	idle: gtpile
 		Start: 0
