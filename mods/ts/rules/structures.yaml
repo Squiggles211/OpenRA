@@ -1066,6 +1066,30 @@ NAOBEL:
 	WithIdleOverlay@LIGHTS:
 		Sequence: idle-lights
 
+GAPAVE:
+	Valued:
+		Cost:75
+	Tooltip:
+		Name: Pavement
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 10
+		Prerequisites: barracks
+		Owner: gdi,nod
+	LaysTerrain:
+		Template: 1
+		TerrainTypes: Clear, Road
+	Building:
+		Adjacent: 7
+		Power: 0
+		Footprint: xxx xxx xxx
+		Dimensions: 3,3
+		BuildSounds: place2.aud
+		TerrainTypes: Clear, Road
+		AllowInvalidPlacement: true
+	RenderSprites:
+	RemoveImmediately:
+	
 ANYPOWER:
 	Tooltip:
 		Name: Power Plant

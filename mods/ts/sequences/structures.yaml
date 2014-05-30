@@ -206,11 +206,11 @@ napowr:
 	idle-lights: ntpowr_a
 		Start: 0
 		Length: 9
-		Tick: 200
+		Tick: 100
 	damaged-idle-lights: ntpowr_a
 		Start: 9
 		Length: 9
-		Tick: 200
+		Tick: 100
 	critical-idle-lights: ntpowr_a
 		Start: 9
 		Length: 9
@@ -945,3 +945,11 @@ gadept:
 		ShadowStart: 10
 	icon: fixicon
 		Start: 0
+		
+gapave:
+	idle: pvclr01
+		Start: 0
+	make: pvclr01
+		Start: 0
+	icon: paveicon
+	

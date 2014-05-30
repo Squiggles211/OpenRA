@@ -112,6 +112,7 @@ World:
 		Type: Crater
 		Sequence: craters
 	PathfinderDebugOverlay:
+	BuildableTerrainLayer:
 	SpawnMapActors:
 	CreateMPPlayers:
 	MPStartUnits@MCV:
@@ -132,4 +133,3 @@ World:
 	ScreenShaker:
 	RadarPings:
 	StartGameNotification:
-

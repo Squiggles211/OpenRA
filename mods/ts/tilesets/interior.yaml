@@ -25,4 +25,10 @@ Templates:
 		Category: Placeholder
 		Tiles:
 			0: Clear
-
+	Template@1:
+		Id: 1
+		Image: pvclr01
+		Size: 1,1
+		Category: Placeholder
+		Tiles:
+			0: Clear
