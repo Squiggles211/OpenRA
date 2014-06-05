@@ -652,7 +652,7 @@ SAPC:
 	WithVoxelBody:
 
 SUBTANK:
-	Inherits: ^Vehicle
+	Inherits: ^Subterranean
 	Valued:
 		Cost: 750
 	Tooltip:
@@ -662,9 +662,9 @@ SUBTANK:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
 		Owner: nod
-	Mobile:
+	SubterraneanMobile:
 		ROT: 6
-		Speed: 71
+		Speed: 80
 	Health:
 		HP: 300
 	Armor:

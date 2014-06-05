@@ -219,6 +219,19 @@
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 
+^Subterranean:
+	Inherits: ^Vehicle
+	-Mobile:
+	SubterraneanMobile:
+		Crushes: crate
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 60
+			Road: 100
+			Beach: 60
+			Tiberium: 60
+		ROT: 5
+		
 ^Helicopter:
 	AppearsOnRadar:
 		UseLocation: yes

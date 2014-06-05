@@ -93,6 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\CaptureActor.cs" />
+    <Compile Include="Activities\Burrow.cs" />
+    <Compile Include="Activities\MoveSubterranean.cs" />
     <Compile Include="Activities\Hunt.cs" />
     <Compile Include="AI\AttackOrFleeFuzzy.cs" />
     <Compile Include="AI\BaseBuilder.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="Air\AttackHeli.cs" />
     <Compile Include="Air\AttackPlane.cs" />
     <Compile Include="Effects\Beacon.cs" />
+    <Compile Include="Move\SubterraneanMobile.cs" />
     <Compile Include="Player\PlaceBeacon.cs" />
     <Compile Include="MenuPaletteEffect.cs" />
     <Compile Include="Crates\UnitUpgradeCrateAction.cs" />
@@ -573,9 +576,5 @@ copy "FuzzyLogicLibrary.dll" "$(SolutionDir)"
 cd "$(SolutionDir)"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Scripting\Global\" />
-    <Folder Include="Scripting\Properties\" />
-    <Folder Include="Console\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

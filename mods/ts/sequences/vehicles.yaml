@@ -98,10 +98,16 @@ bggy:
 		Start: 0
 
 sapc:
+	dig: dig
+		Start: 0
+		Tick: 14
 	icon: sapcicon
 		Start: 0
 
 subtank:
+	dig: dig
+		Start: 0
+		Tick: 14
 	icon: subticon
 		Start: 0
 

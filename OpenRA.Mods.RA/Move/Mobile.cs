@@ -254,10 +254,10 @@ namespace OpenRA.Mods.RA.Move
 			self.World.ScreenMap.Remove(self);
 		}
 
-		public IEnumerable<IOrderTargeter> Orders { get { yield return new MoveOrderTargeter(self, Info); } }
+		public virtual IEnumerable<IOrderTargeter> Orders { get { yield return new MoveOrderTargeter(self, Info); } }
 
 		// Note: Returns a valid order even if the unit can't move to the target
-		public Order IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
+		public virtual Order IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
 		{
 			if (order is MoveOrderTargeter)
 			{
@@ -332,7 +332,7 @@ namespace OpenRA.Mods.RA.Move
 			self.SetTargetLine(Target.FromCell(currentLocation), Color.Green);
 		}
 
-		protected void PerformMove(Actor self, CPos targetLocation, bool queued)
+		protected virtual void PerformMove(Actor self, CPos targetLocation, bool queued)
 		{
 			if (queued)
 				self.QueueActivity(new CallFunc(() => PerformMoveInner(self, targetLocation, true)));
@@ -353,7 +353,7 @@ namespace OpenRA.Mods.RA.Move
 				Nudge(self, self, true);
 		}
 
-		public string VoicePhraseForOrder(Actor self, Order order)
+		public virtual string VoicePhraseForOrder(Actor self, Order order)
 		{
 			switch( order.OrderString )
 			{
@@ -569,7 +569,7 @@ namespace OpenRA.Mods.RA.Move
 			return Util.SequenceActivities(new Turn(facing), new Drag(pos, to, length));
 		}
 
-		public Activity VisualMove(Actor self, WPos fromPos, WPos toPos)
+		public virtual Activity VisualMove(Actor self, WPos fromPos, WPos toPos)
 		{
 			var speed = MovementSpeedForCell(self, self.Location);
 			var length = speed > 0 ? (toPos - fromPos).Length / speed : 0;
