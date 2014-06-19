@@ -1,0 +1,26 @@
+Container@GAME_STATS:
+	Children:
+		Background@BORDER:
+			Width: WINDOW_RIGHT - 30
+			Height: WINDOW_BOTTOM - 30
+			Background: shellmapborder
+		Background@NEWS_BG:
+			X: (WINDOW_RIGHT - WIDTH)/2
+			Y: 100
+			Width: 400
+			Height: 55
+			Children:
+				DropDownButton@NEWS_BUTTON:
+					X: 15
+					Y: 15
+					Width: 370
+					Height: 25
+					Text: Battlefield News
+					Font: Bold
+		Button@CLOSE:
+			X: WINDOW_RIGHT - (WIDTH/4) - 75
+			Y: WINDOW_BOTTOM - (HEIGHT/4) - 25
+			Width: 75
+			Height: 25
+			Text: Continue
+			

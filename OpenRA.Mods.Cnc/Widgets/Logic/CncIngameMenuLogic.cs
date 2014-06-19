@@ -13,6 +13,7 @@ using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.RA;
 using OpenRA.Mods.RA.Widgets;
+using OpenRA.Mods.RA.Widgets.Logic;
 using OpenRA.Traits;
 using OpenRA.Widgets;
 
@@ -45,6 +46,16 @@ namespace OpenRA.Mods.Cnc.Widgets.Logic
 				Game.RunAfterDelay(1200, () => mpe.Fade(MenuPaletteEffect.EffectType.Black));
 				Game.RunAfterDelay(1200 + 40 * mpe.Info.FadeLength, () =>
 				{
+					var players = world.Players.Where(p => !p.NonCombatant).ToArray();
+					var stats = new PlayerStatistics[players.Length];
+
+					var i = 0;
+
+					foreach (var player in players)
+						stats[i++] = player.PlayerActor.TraitOrDefault<PlayerStatistics>();
+
+					PlayerStatistics.previousGameStats = stats;
+
 					Game.Disconnect();
 					Ui.ResetAll();
 					Game.LoadShellMap();

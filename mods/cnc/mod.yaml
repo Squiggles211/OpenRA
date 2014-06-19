@@ -99,6 +99,7 @@ ChromeLayout:
 	mods/cnc/chrome/irc.yaml
 	mods/cnc/chrome/assetbrowser.yaml
 	mods/cnc/chrome/missionbrowser.yaml
+	mods/cnc/chrome/gamestats.yaml
 
 Weapons:
 	mods/cnc/weapons.yaml

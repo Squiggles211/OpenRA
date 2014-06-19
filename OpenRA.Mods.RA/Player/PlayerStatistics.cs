@@ -22,6 +22,7 @@ namespace OpenRA.Mods.RA
 
 	public class PlayerStatistics : ITick, IResolveOrder
 	{
+		public static PlayerStatistics[] previousGameStats { get; set; }
 		World world;
 		Player player;
 

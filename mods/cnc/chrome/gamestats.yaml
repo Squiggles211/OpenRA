@@ -1,0 +1,45 @@
+Container@GAME_STATS:
+	Width: WINDOW_RIGHT
+	Height: WINDOW_BOTTOM
+	Logic: GameStatsLogic
+	Children:
+		Background@STATS_NEWS_BG:
+			X: (WINDOW_RIGHT - WIDTH)/2
+			Y: 100
+			Width: 400
+			Height: 55
+			Children:
+				DropDownButton@STATS_NEWS_BUTTON:
+					X: 15
+					Y: 15
+					Width: 370
+					Height: 25
+					Text: Battlefield News
+					Font: Bold
+		Background@BG:
+			X: WINDOW_RIGHT/4
+			Y: WINDOW_BOTTOM/4
+			Width: WINDOW_RIGHT/2
+			Height: WINDOW_BOTTOM/2
+			Background: panel-black
+			Children:
+				Button@STATS_CLOSE:
+					X: PARENT_RIGHT - ((WINDOW_RIGHT - 60)/4)
+					Y: PARENT_BOTTOM - ((WINDOW_BOTTOM - 60)/4)
+					Width: 75
+					Height: 30
+					Text: Continue
+				LineGraph@STATS_GRAPH:
+					X: 0
+					Y: 0
+					Width: PARENT_RIGHT
+					Height: PARENT_BOTTOM
+					ValueFormat: ${0}
+					XAxisValueFormat: {0}
+					YAxisValueFormat: ${0:F0}
+					XAxisSize: 20
+					YAxisSize: 10
+					XAxisLabel: m
+					YAxisLabel: $
+					LabelFont: TinyBold
+					AxisFont: Bold

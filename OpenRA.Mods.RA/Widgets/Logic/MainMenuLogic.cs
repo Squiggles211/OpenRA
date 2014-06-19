@@ -67,6 +67,23 @@ namespace OpenRA.Mods.RA.Widgets.Logic
 			};
 
 			mainMenu.Get<ButtonWidget>("EXTRAS_BUTTON").OnClick = () => menuType = MenuType.Extras;
+			/*mainMenu.Get<ButtonWidget>("EXTRAS_BUTTON").OnClick = () =>
+			{
+				try
+				{
+					Game.OpenWindow("GAME_STATS", new WidgetArgs
+					{
+						{ "onExit", () => menuType = MenuType.Main }
+					});
+
+					menuType = MenuType.None;
+				}
+				//Catch Exception when opening window. End game stats are unsupported on this mod..
+				catch (InvalidDataException e)
+				{
+				}
+			};
+			*/
 
 			mainMenu.Get<ButtonWidget>("QUIT_BUTTON").OnClick = Game.Exit;
 
@@ -166,6 +183,17 @@ namespace OpenRA.Mods.RA.Widgets.Logic
 				};
 
 				newsButton.IsHighlighted = () => newsHighlighted && Game.LocalTick % 50 < 25;;
+			}
+
+			//Show stats when loading main menu if static stats var is not null..
+			if (PlayerStatistics.previousGameStats != null)
+			{
+				menuType = MenuType.None;
+
+				Game.OpenWindow("GAME_STATS", new WidgetArgs
+				{
+					{ "onExit", () => menuType = MenuType.Main }
+				});
 			}
 		}
 
