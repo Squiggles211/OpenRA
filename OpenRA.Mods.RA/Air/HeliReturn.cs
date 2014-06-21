@@ -23,6 +23,16 @@ namespace OpenRA.Mods.RA.Air
 				a => rearmBuildings.Contains(a.Info.Name) && !Reservable.IsReserved(a));
 		}
 
+		public static Actor NearestHelipad(Actor self)
+		{
+			var rearmBuildings = self.Info.Traits.Get<HelicopterInfo>().RearmBuildings;
+
+			return self.World.ActorsWithTrait<Reservable>()
+					.Where(a => a.Actor.Owner == self.Owner && rearmBuildings.Contains(a.Actor.Info.Name))
+					.Select(a => a.Actor)
+					.ClosestTo(self);
+		}
+
 		public override Activity Tick(Actor self)
 		{
 			if (IsCanceled)
@@ -33,14 +43,11 @@ namespace OpenRA.Mods.RA.Air
 
 			if (dest == null)
 			{
-				var rearmBuildings = self.Info.Traits.Get<HelicopterInfo>().RearmBuildings;
-				var nearestHpad = self.World.ActorsWithTrait<Reservable>()
-									.Where(a => a.Actor.Owner == self.Owner && rearmBuildings.Contains(a.Actor.Info.Name))
-									.Select(a => a.Actor)
-									.ClosestTo(self);
+				var nearestHpad = NearestHelipad(self);
 
+				//Should not be null unless the helipad that we would have attempted to return to was destroyed in the same tick as this activity
 				if (nearestHpad == null)
-					return Util.SequenceActivities(new Turn(initialFacing), new HeliLand(true), NextActivity);
+					return NextActivity;
 				else
 					return Util.SequenceActivities(new HeliFly(self, Target.FromActor(nearestHpad)));
 			}
@@ -60,7 +67,8 @@ namespace OpenRA.Mods.RA.Air
 				new HeliFly(self, Target.FromPos(dest.CenterPosition + offset)),
 				new Turn(initialFacing),
 				new HeliLand(false),
-				new ResupplyAircraft());
+				new ResupplyAircraft(),
+				new TakeOff());
 		}
 	}
 }
