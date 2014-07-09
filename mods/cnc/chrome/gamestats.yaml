@@ -3,19 +3,6 @@ Container@GAME_STATS:
 	Height: WINDOW_BOTTOM
 	Logic: GameStatsLogic
 	Children:
-		Background@STATS_NEWS_BG:
-			X: (WINDOW_RIGHT - WIDTH)/2
-			Y: 100
-			Width: 400
-			Height: 55
-			Children:
-				DropDownButton@STATS_NEWS_BUTTON:
-					X: 15
-					Y: 15
-					Width: 370
-					Height: 25
-					Text: Battlefield News
-					Font: Bold
 		Background@BG:
 			X: WINDOW_RIGHT/4
 			Y: WINDOW_BOTTOM/4
@@ -23,6 +10,30 @@ Container@GAME_STATS:
 			Height: WINDOW_BOTTOM/2
 			Background: panel-black
 			Children:
+				Button@UNITS_TAB:
+					X: 0
+					Y: 0-50
+					Width: PARENT_RIGHT/4
+					Height: 50
+					Text: Units
+				Button@STRUCTURES_TAB:
+					X: PARENT_RIGHT/4
+					Y: 0-50
+					Width: PARENT_RIGHT/4
+					Height: 50
+					Text: Structures
+				Button@RESOURCES_TAB:
+					X: 2*(PARENT_RIGHT/4)
+					Y: 0-50
+					Width: PARENT_RIGHT/4
+					Height: 50
+					Text: Resources
+				Button@STATS_TAB:
+					X: 3*(PARENT_RIGHT/4)
+					Y: 0-50
+					Width: PARENT_RIGHT/4
+					Height: 50
+					Text: Stats
 				Button@STATS_CLOSE:
 					X: PARENT_RIGHT - ((WINDOW_RIGHT - 60)/4)
 					Y: PARENT_BOTTOM - ((WINDOW_BOTTOM - 60)/4)

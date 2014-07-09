@@ -10,6 +10,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 using OpenRA.Mods.RA.Buildings;
 using OpenRA.Traits;
 
@@ -26,6 +27,9 @@ namespace OpenRA.Mods.RA
 		World world;
 		Player player;
 
+		public readonly string playerName;
+		public readonly Color playerColor;
+
 		public double MapControl;
 		public int OrderCount;
 
@@ -33,11 +37,13 @@ namespace OpenRA.Mods.RA
 		{
 			get
 			{
-				return player.PlayerActor.Trait<PlayerResources>().Earned - earnedAtBeginningOfMinute;
+				return player.PlayerActor.Trait<PlayerResources>().Earned;
 			}
 		}
-		public Queue<int> EarnedSamples = new Queue<int>(100);
-		int earnedAtBeginningOfMinute;
+
+		public List<int> EarnedSamples = new List<int>();
+		public List<int> BuiltBuildings = new List<int>();
+		public List<int> BuiltUnits = new List<int>();
 
 		public int KillsCost;
 		public int DeathsCost;
@@ -48,10 +54,21 @@ namespace OpenRA.Mods.RA
 		public int BuildingsKilled;
 		public int BuildingsDead;
 
+		public int currentBuildings;
+		public int currentUnits;
+
 		public PlayerStatistics(Actor self)
 		{
 			world = self.World;
 			player = self.Owner;
+
+			playerName = player.PlayerName;
+			playerColor = player.Color.RGB;
+
+			currentBuildings = world.Actors.Where(a => a.IsInWorld && a.Owner == self.Owner && a.HasTrait<Building>() && !a.IsDead()).Count();
+			BuiltBuildings.Add(currentBuildings);
+
+			currentUnits = 0;
 		}
 
 		void UpdateMapControl()
@@ -66,15 +83,13 @@ namespace OpenRA.Mods.RA
 
 		void UpdateEarnedThisMinute()
 		{
-			EarnedSamples.Enqueue(EarnedThisMinute);
-			earnedAtBeginningOfMinute = player.PlayerActor.Trait<PlayerResources>().Earned;
-			if (EarnedSamples.Count > 100)
-				EarnedSamples.Dequeue();
+			EarnedSamples.Add(EarnedThisMinute);
 		}
 
 		public void Tick(Actor self)
 		{
-			if (self.World.WorldTick % 1500 == 1)
+			//Update every 10 seconds
+			if (self.World.WorldTick % 250 == 1)
 				UpdateEarnedThisMinute();
 			if (self.World.WorldTick % 250 == 0)
 				UpdateMapControl();
@@ -109,28 +124,41 @@ namespace OpenRA.Mods.RA
 
 	public class UpdatesPlayerStatisticsInfo : TraitInfo<UpdatesPlayerStatistics> { }
 
-	public class UpdatesPlayerStatistics : INotifyKilled
+	public class UpdatesPlayerStatistics : INotifyKilled, INotifyBuildingPlaced
 	{
 		public void Killed(Actor self, AttackInfo e)
 		{
 			var attackerStats = e.Attacker.Owner.PlayerActor.Trait<PlayerStatistics>();
 			var defenderStats = self.Owner.PlayerActor.Trait<PlayerStatistics>();
+
 			if (self.HasTrait<Building>())
 			{
 				attackerStats.BuildingsKilled++;
 				defenderStats.BuildingsDead++;
+
+				defenderStats.BuiltBuildings.Add(--defenderStats.currentBuildings);
 			}
 			else if (self.HasTrait<IPositionable>())
 			{
 				attackerStats.UnitsKilled++;
 				defenderStats.UnitsDead++;
+
+				defenderStats.BuiltUnits.Add(--defenderStats.currentUnits);
 			}
+
 			if (self.HasTrait<Valued>())
 			{
 				var cost = self.Info.Traits.Get<ValuedInfo>().Cost;
 				attackerStats.KillsCost += cost;
 				defenderStats.DeathsCost += cost;
 			}
+		}
+
+		public void BuildingPlaced(Actor building)
+		{
+			var playerStats = building.Owner.PlayerActor.Trait<PlayerStatistics>();
+
+			playerStats.BuiltBuildings.Add(++playerStats.currentBuildings);
 		}
 	}
 }

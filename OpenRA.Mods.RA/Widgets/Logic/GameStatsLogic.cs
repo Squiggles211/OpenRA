@@ -21,6 +21,7 @@ namespace OpenRA.Mods.RA.Widgets.Logic
 	public class GameStatsLogic
 	{
 		readonly Widget rootMenu;
+		readonly LineGraphWidget graph;
 
 		[ObjectCreator.UseCtor]
 		public GameStatsLogic(Widget widget, Action onExit)
@@ -35,6 +36,38 @@ namespace OpenRA.Mods.RA.Widgets.Logic
 				//Close this window and run the onExit action
 				Ui.CloseWindow();
 				onExit();
+			};
+
+			graph = rootMenu.Get<LineGraphWidget>("STATS_GRAPH");
+
+			graph.GetSeries = () =>
+				PlayerStatistics.previousGameStats.Select(p => new LineGraphSeries(p.playerName, p.playerColor, p.EarnedSamples.Select(s => (float)s)));
+
+			graph.GetXAxisSize = () =>
+				PlayerStatistics.previousGameStats.Select(p => p.EarnedSamples.Count).Max();
+
+			rootMenu.Get<ButtonWidget>("STRUCTURES_TAB").OnClick = () =>
+			{
+				//change series to get buildings info
+				graph.GetSeries = () =>
+					PlayerStatistics.previousGameStats.Select(p => new LineGraphSeries(p.playerName, p.playerColor, p.BuiltBuildings.Select(b => (float)b)));
+
+				graph.GetXAxisSize = () =>
+					PlayerStatistics.previousGameStats.Select(p => p.BuiltBuildings.Count).Max();
+
+				graph.GetYAxisSize = () =>
+					(PlayerStatistics.previousGameStats.Select(p => p.BuiltBuildings.Count).Max() * 4 / 3) + 1;
+
+				graph.GetYAxisValueFormat = () => "{0}";
+			};
+
+			rootMenu.Get<ButtonWidget>("RESOURCES_TAB").OnClick = () =>
+			{
+				graph.GetSeries = () =>
+					PlayerStatistics.previousGameStats.Select(p => new LineGraphSeries(p.playerName, p.playerColor, p.EarnedSamples.Select(s => (float)s)));
+
+				graph.GetXAxisSize = () =>
+					PlayerStatistics.previousGameStats.Select(p => p.EarnedSamples.Count).Max();
 			};
 		}
 	}
